@@ -46,6 +46,9 @@ public class TodoApp {
 
     }
 
+    //run the commands
+
+
     public static void main(String[] args) {
         boolean run = true;
         TodoApp one = new TodoApp();
@@ -64,9 +67,6 @@ public class TodoApp {
 
             if (userInput.equals("")) {
                 one.printOpener();
-            }else if (!userInput.matches("[\\-r|\\-l|\\-a|\\-c]")) {
-                System.out.println("Unsupported argument");
-                one.printOpener();
             } else if (userInput.substring(0, 2).equals("-a") && userInput.length() > 3) {
                 listOne.add(userInput.substring(3));
             } else if (userInput.substring(0, 2).equals("-a") && userInput.length() < 3) {
@@ -79,12 +79,19 @@ public class TodoApp {
                 System.out.println("Unable to remove: index is not a number");
             }else if (userInput.equals("-r")) {
                 System.out.println("Unable to remove: no index provided");
-            } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() <= (parseInt(userInput.substring(3,4)))) {
+            } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() < (parseInt(userInput.substring(3,4)))) {
                 System.out.println("Unable to remove: index is out of bound");
             } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() >= (parseInt(userInput.substring(3,4)))) {
-                listOne.removeIt(parseInt(userInput.substring(3,4)));
+                listOne.removeIt(parseInt(userInput.substring(3, 4)));
+            } else if (userInput.equals("exit")){
+                    run = false;
+                    break;
+            } else if (!userInput.matches("[\\-r|\\-l|\\-a|\\-c]")) {
+                System.out.println("Unsupported argument");
+                one.printOpener();
             }
         }
     }
-    
 }
+
+
