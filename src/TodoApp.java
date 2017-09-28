@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class TodoApp {
     List<String> content = new ArrayList<>();
 
@@ -62,14 +64,16 @@ public class TodoApp {
 
             if (userInput.equals("")) {
                 one.printOpener();
-            } else if (userInput.substring(0, 2).equals("-a")) {
+            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() > 3) {
                 listOne.add(userInput.substring(3));
+            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() < 3) {
+                System.out.println("Unable to add: no task provided");
             } else if (userInput.substring(0, 2).equals("-l") && listOne.checkSize() != 0) {
                 listOne.printList();
             } else if (userInput.substring(0, 2).equals("-l") && listOne.checkSize() == 0) {
                 System.out.println("No todos for today! :)");
-            } else if (userInput.substring(0, 2).equals("-r")) {
-                listOne.remove(userInput.substring(3));
+            } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() >= (parseInt(userInput.substring(3,4)))) {
+                listOne.removeIt(parseInt(userInput.substring(3,4)));
             }
         }
     }

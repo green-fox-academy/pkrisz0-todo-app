@@ -39,6 +39,17 @@ public class ListOf {
         }
     }
 
+    // remove elements with index
+    public void removeIt(int index) {
+        this.list.remove(list.get(index - 1));
+        try {
+            Path filepath = Paths.get("C:/greenfox/pkrisz0-todo-app/src/list.txt");
+            Files.write(filepath, this.list);
+        } catch (IOException e) {
+            System.out.println("Unable to write file: list");
+        }
+    }
+
    //print list
     public void printList() {
         try {
