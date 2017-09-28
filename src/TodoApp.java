@@ -43,7 +43,6 @@ public class TodoApp {
         } catch (IOException e) {
             System.out.println("Unable to write file: print_usage");
         }
-
     }
 
     //run the commands
