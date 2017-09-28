@@ -47,10 +47,43 @@ public class TodoApp {
     }
 
     //run the commands
+    public void run(TodoApp todoapp, ListOf list) {
+        boolean run = true;
+        while(run) {
+            Scanner scanner = new Scanner(System.in);
+            String userInput = scanner.nextLine();
+
+            if (userInput.equals("")) {
+                todoapp.printOpener();
+            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() > 3) {
+                list.add(userInput.substring(3));
+            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() < 3) {
+                System.out.println("Unable to add: no task provided");
+            } else if (userInput.substring(0, 2).equals("-l") && list.checkSize() != 0) {
+                list.printList();
+            } else if (userInput.substring(0, 2).equals("-l") && list.checkSize() == 0) {
+                System.out.println("No todos for today! :)");
+            } else if (userInput.substring(0, 2).equals("-r") && userInput.replaceAll("[0-9]", "").length() == userInput.length()) {
+                System.out.println("Unable to remove: index is not a number");
+            }else if (userInput.equals("-r")) {
+                System.out.println("Unable to remove: no index provided");
+            } else if (userInput.substring(0, 2).equals("-r") && list.checkSize() < (parseInt(userInput.substring(3,4)))) {
+                System.out.println("Unable to remove: index is out of bound");
+            } else if (userInput.substring(0, 2).equals("-r") && list.checkSize() >= (parseInt(userInput.substring(3,4)))) {
+                list.removeIt(parseInt(userInput.substring(3, 4)));
+            } else if (userInput.equals("exit")){
+                run = false;
+                break;
+            } else if (!userInput.matches("[\\-r|\\-l|\\-a|\\-c]")) {
+                System.out.println("Unsupported argument");
+                todoapp.printOpener();
+            }
+        }
+    }
 
 
     public static void main(String[] args) {
-        boolean run = true;
+
         TodoApp one = new TodoApp();
         one.makeOpener();
         one.printOpener();
@@ -61,36 +94,7 @@ public class TodoApp {
         listOne.add("Buy milk");
         listOne.add("Do homework");
 
-        while(run) {
-            Scanner scanner = new Scanner(System.in);
-            String userInput = scanner.nextLine();
-
-            if (userInput.equals("")) {
-                one.printOpener();
-            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() > 3) {
-                listOne.add(userInput.substring(3));
-            } else if (userInput.substring(0, 2).equals("-a") && userInput.length() < 3) {
-                System.out.println("Unable to add: no task provided");
-            } else if (userInput.substring(0, 2).equals("-l") && listOne.checkSize() != 0) {
-                listOne.printList();
-            } else if (userInput.substring(0, 2).equals("-l") && listOne.checkSize() == 0) {
-                System.out.println("No todos for today! :)");
-            } else if (userInput.substring(0, 2).equals("-r") && userInput.replaceAll("[0-9]", "").length() == userInput.length()) {
-                System.out.println("Unable to remove: index is not a number");
-            }else if (userInput.equals("-r")) {
-                System.out.println("Unable to remove: no index provided");
-            } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() < (parseInt(userInput.substring(3,4)))) {
-                System.out.println("Unable to remove: index is out of bound");
-            } else if (userInput.substring(0, 2).equals("-r") && listOne.checkSize() >= (parseInt(userInput.substring(3,4)))) {
-                listOne.removeIt(parseInt(userInput.substring(3, 4)));
-            } else if (userInput.equals("exit")){
-                    run = false;
-                    break;
-            } else if (!userInput.matches("[\\-r|\\-l|\\-a|\\-c]")) {
-                System.out.println("Unsupported argument");
-                one.printOpener();
-            }
-        }
+        one.run(one,listOne);
     }
 }
 
